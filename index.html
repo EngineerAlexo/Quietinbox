@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0b1e">
+
+  <title>Quiet Inbox - Read Message Previews Privately | Download APK</title>
+  <meta name="description" content="Download Quiet Inbox for Android. Save and read message previews from imo, Telegram, WhatsApp and Messenger in one private inbox, without opening each app.">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="Quiet Inbox">
+  <meta name="author" content="Haile">
+
+  <!-- Change this to your real website address -->
+  <link rel="canonical" href="https://YOUR_WEBSITE_ADDRESS/">
+
+  <meta property="og:title" content="Quiet Inbox - Read Message Previews Privately">
+  <meta property="og:description" content="One private inbox for imo, Telegram, WhatsApp and Messenger. Read and reply at your own pace.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://YOUR_WEBSITE_ADDRESS/">
+  <meta property="og:image" content="https://YOUR_WEBSITE_ADDRESS/quiet_inox.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Quiet Inbox - Read Message Previews Privately">
+  <meta name="twitter:description" content="One private inbox for imo, Telegram, WhatsApp and Messenger.">
+  <meta name="twitter:image" content="https://YOUR_WEBSITE_ADDRESS/quiet_inox.jpg">
+
+  <link rel="icon" type="image/jpg" href="quiet_inox.jpg">
+
+  <style>
+    /* =========================
+       1. GLOBAL DESIGN
+       (Change colors here to restyle the whole site)
+    ========================== */
+    :root {
+      --bg: #0a0b1e;
+      --surface: #14163a;
+      --primary: #8b7bff;
+      --secondary: #3fd8ff;
+      --text: #f6f6ff;
+      --muted: #a9acc9;
+      --border: rgba(255, 255, 255, 0.10);
+      --gradient: linear-gradient(110deg, #8b7bff, #3fd8ff);
+      --radius: 22px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at 10% 0%, #231d57 0, transparent 35%),
+        radial-gradient(ellipse at 100% 35%, #0e2f3d 0, transparent 30%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    button:focus-visible, a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--secondary);
+      outline-offset: 4px;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .section { padding: 90px 0; }
+
+    .section-heading { text-align: center; max-width: 680px; margin: 0 auto 44px; }
+    .section-heading h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -1.5px;
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+    .section-heading p { color: var(--muted); }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #dcd7ff;
+      background: rgba(139, 123, 255, 0.10);
+      border: 1px solid rgba(139, 123, 255, 0.28);
+      padding: 7px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--secondary); }
+
+    /* =========================
+       2. NAVIGATION
+    ========================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 30, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
+
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 850; font-size: 19px; letter-spacing: -0.5px; }
+    .brand img { width: 46px; height: 46px; border-radius: 14px; object-fit: contain; }
+
+    .nav-links { display: flex; align-items: center; gap: 27px; }
+    .nav-links > a:not(.button) { color: var(--muted); font-size: 14px; transition: color .2s; }
+    .nav-links > a:not(.button):hover { color: white; }
+
+    /* =========================
+       3. BUTTONS
+    ========================== */
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 13px 23px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s, filter .2s, box-shadow .2s;
+    }
+    .button:hover { transform: translateY(-3px); filter: brightness(1.07); }
+
+    .button-primary { background: var(--gradient); color: #0a0b1e; box-shadow: 0 10px 32px rgba(100, 150, 255, .2); }
+    .button-secondary { border-color: var(--border); color: var(--text); background: rgba(255, 255, 255, .035); }
+    .button svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* =========================
+       4. HERO
+    ========================== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 65px;
+      align-items: center;
+      padding-top: 85px;
+      padding-bottom: 90px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 5.6vw, 66px);
+      line-height: 1.07;
+      letter-spacing: -3px;
+      margin: 25px 0 22px;
+    }
+
+    .hero-description { max-width: 600px; font-size: 17px; color: var(--muted); margin-bottom: 30px; }
+
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; }
+    .hero-note { margin-top: 19px; color: #8c90b3; font-size: 12px; }
+
+    .hero-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 440px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(139, 123, 255, .24), transparent 58%),
+        linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.01));
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      border: 1px solid rgba(139, 123, 255, .22);
+      border-radius: 50%;
+    }
+    .hero-visual::after { width: 365px; height: 365px; border-color: rgba(63, 216, 255, .14); }
+
+    .app-preview {
+      position: relative;
+      z-index: 2;
+      width: 230px;
+      padding: 12px;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: #06071a;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+      transform: rotate(-4deg);
+    }
+
+    .app-screen {
+      padding: 18px 14px;
+      min-height: 355px;
+      border-radius: 25px;
+      background: linear-gradient(160deg, #26235e, #0e1030);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .speaker { width: 65px; height: 5px; background: #3b3a78; border-radius: 20px; margin: 0 auto 14px; }
+
+    .inbox-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .inbox-header img { width: 32px; height: 32px; border-radius: 10px; object-fit: contain; }
+    .inbox-header strong { display: block; font-size: 13px; line-height: 1.2; }
+    .inbox-header small { color: var(--secondary); font-size: 10px; }
+
+    .item {
+      padding: 9px 10px;
+      border-radius: 13px;
+      background: rgba(255,255,255,.06);
+      margin-bottom: 8px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+    .item .src { display: block; font-size: 9px; font-weight: 800; letter-spacing: .6px; color: var(--secondary); margin-bottom: 2px; }
+    .item.saved { border: 1px solid rgba(139,123,255,.35); background: rgba(139,123,255,.12); }
+
+    .item-actions { display: flex; gap: 6px; margin-top: 6px; }
+    .item-actions span {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.08);
+      color: #dcd7ff;
+    }
+
+    .inbox-footer {
+      margin-top: auto;
+      text-align: center;
+      font-size: 9px;
+      color: #b9bcdc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 7px;
+    }
+
+    /* =========================
+       5. HIGHLIGHTS
+    ========================== */
+    .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+
+    .highlight { padding: 25px; border: 1px solid var(--border); border-radius: 19px; background: rgba(255,255,255,.025); }
+    .highlight strong { display: block; font-size: 16px; margin-bottom: 5px; }
+    .highlight p { color: var(--muted); font-size: 13px; }
+
+    .highlight-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      margin-bottom: 17px;
+      border-radius: 13px;
+      color: var(--primary);
+      background: rgba(139,123,255,.14);
+      font-size: 21px;
+    }
+
+    /* =========================
+       6. FEATURES
+    ========================== */
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    .feature-card {
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(25,27,64,.85), rgba(13,14,38,.85));
+      transition: transform .2s, border-color .2s;
+    }
+    .feature-card:hover { transform: translateY(-5px); border-color: rgba(139,123,255,.45); }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 49px;
+      height: 49px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      background: rgba(139,123,255,.14);
+      font-size: 24px;
+    }
+
+    .feature-card h3 { font-size: 17px; margin-bottom: 9px; }
+    .feature-card p { font-size: 14px; color: var(--muted); }
+
+    /* =========================
+       7. DOWNLOAD PANEL
+    ========================== */
+    .download-section { padding: 45px 0 90px; }
+
+    .download-panel {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 45px;
+      border: 1px solid rgba(139,123,255,.3);
+      border-radius: 28px;
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(63,216,255,.13), transparent 50%),
+        linear-gradient(120deg, rgba(139,123,255,.14), rgba(255,255,255,.025));
+    }
+
+    .download-panel h2 { font-size: clamp(28px, 4vw, 39px); letter-spacing: -1.3px; line-height: 1.2; margin-bottom: 13px; }
+    .download-panel p { max-width: 620px; color: var(--muted); font-size: 14px; }
+    .download-panel .button { white-space: nowrap; }
+    .download-meta { margin-top: 14px; color: #8c90b3; font-size: 12px; }
+
+    /* =========================
+       8. INSTALLATION GUIDE
+    ========================== */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px; }
+
+    .step { padding: 24px; border: 1px solid var(--border); border-radius: 19px; background: rgba(255,255,255,.025); }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      margin-bottom: 20px;
+      border-radius: 13px;
+      background: rgba(63,216,255,.1);
+      color: var(--secondary);
+      font-weight: 900;
+    }
+
+    .step h3 { font-size: 15px; margin-bottom: 9px; }
+    .step p { font-size: 13px; color: var(--muted); }
+
+    /* =========================
+       9. PRIVACY PROMISES
+    ========================== */
+    .promise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+    .promise {
+      display: flex;
+      gap: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: rgba(255,255,255,.025);
+    }
+    .promise .no {
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(139,123,255,.14);
+      color: var(--primary);
+      font-weight: 900;
+    }
+    .promise h3 { font-size: 16px; margin-bottom: 6px; }
+    .promise p { font-size: 14px; color: var(--muted); }
+
+    /* =========================
+       10. FAQ
+    ========================== */
+    .faq { max-width: 800px; margin: auto; }
+    .faq details { border-bottom: 1px solid var(--border); padding: 21px 4px; }
+    .faq summary { cursor: pointer; font-weight: 750; list-style-position: outside; }
+    .faq details p { padding-top: 13px; color: var(--muted); font-size: 14px; }
+
+    .notice {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255,255,255,.025);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .notice strong { color: var(--text); }
+
+    /* =========================
+       CONTACT
+    ========================== */
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 640px; margin-inline: auto; }
+
+    .contact-card {
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(25,27,64,.85), rgba(13,14,38,.85));
+    }
+
+    .contact-card h3 { font-size: 18px; margin-bottom: 16px; }
+
+    .contact-list { list-style: none; display: grid; gap: 10px; }
+
+    .contact-list a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-size: 14px;
+      word-break: break-word;
+      transition: border-color .2s, background .2s;
+    }
+
+    .contact-list a:hover { border-color: rgba(139,123,255,.5); background: rgba(139,123,255,.08); }
+    .contact-list span.ci { font-size: 18px; flex-shrink: 0; }
+
+    /* =========================
+       11. FOOTER
+    ========================== */
+    footer { border-top: 1px solid var(--border); padding: 30px 0; margin-top: 60px; color: #8c90b3; font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links a:hover { color: white; }
+
+    /* =========================
+       12. MOBILE RESPONSIVENESS
+    ========================== */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 60px; }
+      .hero-content { text-align: center; }
+      .hero-description { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { max-width: 520px; width: 100%; margin: auto; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .promise-grid { grid-template-columns: 1fr; }
+      .download-panel { grid-template-columns: 1fr; text-align: center; }
+      .download-panel p { margin-inline: auto; }
+      .download-panel .button { justify-self: center; }
+    }
+
+    @media (max-width: 600px) {
+      .container { width: calc(100% - 30px); }
+      .section { padding: 65px 0; }
+      .nav-inner { min-height: 68px; }
+      .brand { font-size: 15px; gap: 9px; }
+      .brand img { width: 39px; height: 39px; }
+      .nav-links { gap: 0; }
+      .nav-links > a:not(.button) { display: none; }
+      .nav-download { min-height: 41px; padding: 9px 13px; font-size: 12px; }
+      .hero { padding-top: 48px; padding-bottom: 55px; }
+      .hero h1 { font-size: clamp(36px, 10vw, 52px); letter-spacing: -2px; }
+      .hero-description { font-size: 15px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .button { width: 100%; }
+      .hero-visual { min-height: 385px; }
+      .app-preview { width: 215px; }
+      .highlights, .features-grid, .steps { grid-template-columns: 1fr; }
+      .highlight, .feature-card, .step, .promise { padding: 23px; }
+      .download-panel { padding: 28px 20px; }
+      .download-panel .button { width: 100%; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <a class="brand" href="#home" aria-label="Quiet Inbox home">
+        <img src="quiet_inbox.png" alt="Quiet Inbox icon">
+        <span>Quiet Inbox</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#install">Installation</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a class="button button-primary nav-download" href="#download">Get the app</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="container hero" id="home">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">
+          <span class="status-dot"></span>
+          PRIVATE MESSAGE INBOX FOR ANDROID
+        </span>
+
+        <h1>
+          Read messages.<br>
+          <span class="gradient-text">At your own pace.</span>
+        </h1>
+
+        <p class="hero-description">
+          Quiet Inbox collects message previews from imo, Telegram, WhatsApp
+          and Facebook Messenger into one separate inbox. Read them when you
+          are ready, and reply later when you choose. Nothing is sent for you.
+        </p>
+
+        <div class="hero-actions">
+
+          <a class="button button-primary" href="#download">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"
+                    stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download for Android
+          </a>
+
+          <a class="button button-secondary" href="#features">Explore features</a>
+
+        </div>
+
+        <p class="hero-note">Direct APK download · Android app · Stored only on your device</p>
+
+      </div>
+
+      <!-- App preview -->
+      <div class="hero-visual">
+        <div class="app-preview">
+          <div class="app-screen">
+
+            <div class="speaker"></div>
+
+            <div class="inbox-header">
+              <img src="quiet_inbox.png" alt="Quiet Inbox app icon">
+              <div>
+                <strong>Quiet Inbox</strong>
+                <small>● 4 saved previews</small>
+              </div>
+            </div>
+
+            <div class="item">
+              <span class="src">WHATSAPP</span>
+              Sara: Are we still meeting at 6?
+              <div class="item-actions"><span>Read later</span><span>Reply later</span></div>
+            </div>
+
+            <div class="item saved">
+              <span class="src">TELEGRAM</span>
+              Dev group: The build passed 🎉
+              <div class="item-actions"><span>Saved</span></div>
+            </div>
+
+            <div class="item">
+              <span class="src">IMO</span>
+              Mom: Call me when you are free
+              <div class="item-actions"><span>Read later</span><span>Reply later</span></div>
+            </div>
+
+            <div class="item">
+              <span class="src">MESSENGER</span>
+              Ahmed: 📷 Photo
+              <div class="item-actions"><span>Read later</span><span>Reply later</span></div>
+            </div>
+
+            <div class="inbox-footer">Original apps stay closed</div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="container">
+
+      <div class="highlights">
+
+        <article class="highlight">
+          <div class="highlight-icon">📥</div>
+          <strong>One inbox</strong>
+          <p>Previews from imo, Telegram, WhatsApp and Messenger in one place.</p>
+        </article>
+
+        <article class="highlight">
+          <div class="highlight-icon">🔒</div>
+          <strong>Stored on your device</strong>
+          <p>Captured previews stay on your phone. Nothing is uploaded to a server.</p>
+        </article>
+
+        <article class="highlight">
+          <div class="highlight-icon">✋</div>
+          <strong>You stay in control</strong>
+          <p>No automatic replies. Nothing is sent unless you send it yourself.</p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="eyebrow">APP FEATURES</span>
+          <h2>Everything in one quiet place</h2>
+          <p>
+            Keep up with four messaging apps without being pulled into each one.
+          </p>
+        </div>
+
+        <div class="features-grid">
+
+          <article class="feature-card">
+            <div class="feature-icon">📥</div>
+            <h3>One inbox for four apps</h3>
+            <p>See incoming previews from imo, Telegram, WhatsApp and Messenger together in a separate inbox.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Read at your own pace</h3>
+            <p>Go through saved previews whenever you have time, without opening the original messaging apps.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🕓</div>
+            <h3>Reply later</h3>
+            <p>Mark a message to answer later. You decide when and whether to reply.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Save what matters</h3>
+            <p>Keep important previews saved so they are easy to find again.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🚫</div>
+            <h3>No automatic sending</h3>
+            <p>Quiet Inbox never sends messages or replies on your behalf.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Local storage</h3>
+            <p>Captured previews are stored locally on the device, not in the cloud.</p>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PRIVACY -->
+    <section class="section" id="privacy">
+
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="eyebrow">PRIVACY</span>
+          <h2>What Quiet Inbox does and does not do</h2>
+          <p>Clear limits, so you know exactly what to expect before you install.</p>
+        </div>
+
+        <div class="promise-grid">
+
+          <article class="promise">
+            <div class="no">1</div>
+            <div>
+              <h3>It only captures notifications</h3>
+              <p>Quiet Inbox sees only the text that the messaging apps place in notifications. It cannot read chats directly.</p>
+            </div>
+          </article>
+
+          <article class="promise">
+            <div class="no">2</div>
+            <div>
+              <h3>It never sends messages</h3>
+              <p>No automatic replies and no messages sent on your behalf. Replies happen only when you open the original app yourself.</p>
+            </div>
+          </article>
+
+          <article class="promise">
+            <div class="no">3</div>
+            <div>
+              <h3>Stored only on your device</h3>
+              <p>Captured previews are saved locally. They are not uploaded to a Quiet Inbox server.</p>
+            </div>
+          </article>
+
+          <article class="promise">
+            <div class="no">4</div>
+            <div>
+              <h3>Read receipts are not guaranteed</h3>
+              <p>Quiet Inbox cannot guarantee that senders won't see that a notification was shown or that a message was read.</p>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section class="download-section" id="download">
+
+      <div class="container">
+
+        <div class="download-panel">
+
+          <div>
+
+            <span class="eyebrow">ANDROID DOWNLOAD</span>
+
+            <h2 style="margin-top: 18px">
+              Get <span class="gradient-text">Quiet Inbox</span>
+            </h2>
+
+            <p>
+              Download the APK and start organizing your message previews in one
+              private inbox. After downloading, follow the installation steps below.
+            </p>
+
+            <div class="download-meta">
+              File: Android APK · Version: See the app details after installing
+            </div>
+
+          </div>
+
+          <!-- REPLACE the link below with your Quiet Inbox APK download link -->
+          <a class="button button-primary"
+               href="https://drive.google.com/uc?export=download&amp;id=17lnbFZFrJ7iaiW46oIH1hj-OSFuwsZT4"
+       
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"
+                    stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            Download APK
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- INSTALLATION GUIDE -->
+    <section class="section" id="install">
+
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="eyebrow">QUICK INSTALLATION</span>
+          <h2>Install in five steps</h2>
+          <p>Follow these instructions to set up Quiet Inbox on your Android phone.</p>
+        </div>
+
+        <div class="steps">
+
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3>Download the APK</h3>
+            <p>Tap the Download APK button above. If the download page shows a confirmation, follow its instructions.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3>Find your file</h3>
+            <p>Open your phone's Downloads folder or Files app and locate the downloaded APK.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3>Allow installation</h3>
+            <p>If Android asks, enable installation from this source in Settings. Only proceed if you trust the APK.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">04</div>
+            <h3>Grant notification access</h3>
+            <p>Open Quiet Inbox and enable Notification Access in Settings. This lets it read notifications from the four supported apps.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">05</div>
+            <h3>Open your inbox</h3>
+            <p>Captured previews will appear in Quiet Inbox as new notifications arrive.</p>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="eyebrow">HELP CENTER</span>
+          <h2>Frequently asked questions</h2>
+          <p>Useful information before downloading the app.</p>
+        </div>
+
+        <div class="faq">
+
+          <details>
+            <summary>What is Quiet Inbox?</summary>
+            <p>Quiet Inbox is a privacy-focused Android app. It saves incoming message previews from imo, Telegram, WhatsApp and Facebook Messenger into one separate inbox, so you can read them without opening each app.</p>
+          </details>
+
+          <details>
+            <summary>Does it open my messages or chats?</summary>
+            <p>No. Quiet Inbox only captures what appears in notifications. It does not open the original messaging apps or read your full chat history.</p>
+          </details>
+
+          <details>
+            <summary>Why does it need Notification Access?</summary>
+            <p>Android requires Notification Access before an app can read notifications from other apps. You can turn this permission off at any time in your phone's settings.</p>
+          </details>
+
+          <details>
+            <summary>What gets captured?</summary>
+            <p>Only the text the messaging app shows in its notification, such as the sender and the message preview. Some apps show only a generic notice like "New message", or hide content when the phone is locked. In those cases, Quiet Inbox can only save what is shown.</p>
+          </details>
+
+          <details>
+            <summary>Will the sender know I read their message?</summary>
+            <p>Quiet Inbox cannot guarantee that. Read receipts depend on the messaging app and its settings. Reading a preview in Quiet Inbox may or may not count as reading the message, depending on the app.</p>
+          </details>
+
+          <details>
+            <summary>Does Quiet Inbox send replies for me?</summary>
+            <p>No. It never sends messages or replies automatically. Marking a message to reply later only saves a reminder in the app.</p>
+          </details>
+
+          <details>
+            <summary>Where are my saved previews stored?</summary>
+            <p>Captured previews are stored locally on your device. They are not uploaded to a Quiet Inbox server. Uninstalling the app removes them.</p>
+          </details>
+
+          <details>
+            <summary>Why does Android show an installation warning?</summary>
+            <p>Android warns you about apps installed outside Google Play. Make sure you downloaded the APK from this official page before proceeding, and never ignore a security warning without understanding it.</p>
+          </details>
+
+          <details>
+            <summary>Do I need internet to use Quiet Inbox?</summary>
+            <p>Quiet Inbox works on your device and does not need internet to show saved previews. The messaging apps still need internet to deliver the notifications it captures.</p>
+          </details>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="eyebrow">CONTACT</span>
+          <h2>Get in touch</h2>
+          <p>Questions, feedback or problems with the app? Reach out to us by email, phone or Telegram.</p>
+        </div>
+
+        <div class="contact-grid">
+
+          <article class="contact-card">
+            <h3>Haile</h3>
+            <ul class="contact-list">
+              <li><a href="mailto:engineerhaile1@gmail.com"><span class="ci">✉️</span>engineerhaile1@gmail.com</a></li>
+              <li><a href="tel:+251979005248"><span class="ci">📞</span>+251 979 005 248</a></li>
+              <li><a href="https://t.me/codecraftethiopia" target="_blank" rel="noopener noreferrer"><span class="ci">✈️</span>Telegram: @codecraftethiopia</a></li>
+            </ul>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- NOTICE -->
+    <section class="container">
+
+      <div class="notice">
+        <strong>Important information</strong>
+        <p style="margin-top: 8px">
+          Quiet Inbox is an independent application and is not affiliated with
+          imo, Telegram, WhatsApp or Facebook. Please respect other people's
+          privacy, use the app responsibly, and follow the law.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container footer-inner">
+
+      <a class="brand" href="#home">
+        <img src="quiet_inbox.png" alt="" width="38" height="38">
+        <span>Quiet Inbox</span>
+      </a>
+
+      <div>© <span id="year"></span> Quiet Inbox. All rights reserved.</div>
+
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#download">Download</a>
+        <a href="#install">Help</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
